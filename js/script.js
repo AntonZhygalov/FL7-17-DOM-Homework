@@ -238,7 +238,7 @@ function displayHeader() {
     myTr.firstChild.appendChild(myDiv);
     myTable.appendChild(myThead);
     myThead.addEventListener('click', function(event) {
-        var target = event.target || event.srcElement;
+        var target = document.getElementsByClassName('glyphicon')[0];
 
         if (target.className === 'glyphicon glyphicon-sort' || target.className === 'glyphicon glyphicon-sort-by-alphabet-alt') {
             target.classList.remove('glyphicon-sort');
