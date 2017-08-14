@@ -155,6 +155,10 @@ var btnType = ['button', 'reset'];
 var studentKeys = ['name', 'lastName', 'email', 'img', 'skills'];
 var formaInputs = document.getElementById('myForm');
 var myDiv = document.createElement('div');
+var studentEdit = {
+    index: null,
+    edit: false
+};
 
 function displayForm() {
     var myForm = document.createElement('form');
@@ -202,12 +206,21 @@ function displayForm() {
                 newStudent[studentKeys[i]] = formaInputs[i].value;
             }
         }
-        if (newStudent.hasOwnProperty('name')) {
+        if (studentEdit.edit && newStudent.hasOwnProperty('name')) {
+            students[studentEdit.index] = newStudent;
+            document.getElementById('myTbody').remove();
+            displayStudents();
+            document.getElementById("myForm").reset();
+            studentEdit.edit = false;
+        } else if (newStudent.hasOwnProperty('name')) {
             students.push(newStudent);
             document.getElementById('myTbody').remove();
             displayStudents();
             document.getElementById("myForm").reset();
         }
+    });
+    document.getElementsByClassName('btn')[1].addEventListener('click', function() {
+        studentEdit.edit = false;
     });
 
 }
@@ -318,6 +331,8 @@ function displayStudents() {
                 }
             }
         } else if (target.className === 'glyphicon glyphicon-edit') {
+            studentEdit.index = target.parentNode.parentNode.rowIndex - 1;
+            studentEdit.edit = true;
             formaInputs = document.getElementById('myForm');
             var targetChilds = target.parentNode.parentNode.childNodes;
             formaInputs[0].value = targetChilds[0].innerHTML.split(' ')[0];
